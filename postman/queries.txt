@@ -1,0 +1,50 @@
+mutation{
+  createProduct(productRequest:{
+    name: "nombre",
+    expeditionDate: "2000-10-31T01:30:00.000-05:00",
+    expirationDate:"2000-10-31T01:30:00.000-05:00",
+    email: "ajgarcia@paradigmadigital.com",
+    price: 56
+  }) {
+    id,
+    name,
+    price,
+    expeditionDate
+  }
+}
+-----------------
+mutation{
+  updateProduct(productUpdate:{
+    id:1,
+    name: "nombre",
+    expeditionDate: "2000-10-31T01:30:00.000-05:00",
+    expirationDate:"2000-10-31T01:30:00.000-05:00",
+    email: "ajgarcia@paradigmadigital.com",
+    price: 56
+  }) {
+    id,
+    name,
+    price,
+    expeditionDate
+  }
+}
+------------------
+query{
+ product(id:1){
+  id,
+  price
+  name
+ }
+}
+------------------
+mutation{
+  deleteProduct(id:2)
+}
+--------------------
+query{
+  productPaged(pageNumber:0,pageSize:2){
+    id,
+    color
+  }
+}
+------------------

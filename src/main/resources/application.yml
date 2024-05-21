@@ -1,0 +1,28 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: graphql-example
+  graphql:
+    graphiql:
+      enabled: true
+    #Chnage default path /
+    path: /products
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: [ info, health, metrics, prometheus ]

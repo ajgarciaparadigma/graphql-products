@@ -1,0 +1,65 @@
+scalar DateTime
+scalar Long
+scalar Email
+scalar IntRange0To100Scalar
+
+input ProductUpdateRequest{
+  id: Long!
+  name: String! #! para que no admita nulos
+  price: IntRange0To100Scalar!
+  email: Email
+  color: ColorEnum
+  expeditionDate: DateTime
+  expirationDate: DateTime
+  reviews: [ReviewRequest]
+}
+
+input ProductRequest{
+  name: String! #! para que no admita nulos
+  price: IntRange0To100Scalar!
+  email: Email
+  color: ColorEnum
+  expeditionDate: DateTime
+  expirationDate: DateTime
+  reviews: [ReviewRequest]
+}
+
+input ReviewRequest{
+  comment: String
+  evaluation: Float
+}
+
+type ProductResponse{
+  id: Long
+  name: String
+  price: Int
+  color: ColorEnum
+  email: String
+  expeditionDate: DateTime
+  expirationDate: DateTime
+  reviews: [ReviewResponse]
+}
+
+type ReviewResponse{
+  id: Long
+  comment: String
+  evaluation: Float
+}
+type Query {
+  firstQuery : String
+  product(id: Long): ProductResponse
+  productPaged(pageNumber: Int!, pageSize: Int!): [ProductResponse]
+}
+type Mutation {
+  createProduct(productRequest:ProductRequest): ProductResponse
+  updateProduct(productUpdate:ProductUpdateRequest): ProductResponse
+  deleteProduct(id: Long): Long
+}
+
+enum ColorEnum {
+  BLACK
+  WHITE
+  RED
+  GREEN
+  BLUE
+}

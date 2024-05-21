@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+	<springProperty scope="context" name="enable" source="application.logs.mask.enable"/>
+	<springProperty scope="context" name="attributes" source="application.logs.mask.attributes"/>
+	<springProfile name="test">
+		<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+				<layout class="com.paradigma.architecture.core.logger.mask.logback.PDLogbackMaskingPatternLayout">
+					<patternsProperty>${enable}</patternsProperty>
+					<patternsProperty>${attributes}</patternsProperty>
+					<pattern>%d [%thread] %-5level %logger{35} - %msg%n</pattern>
+				</layout>
+			</encoder>
+		</appender>
+		<root level="INFO">
+			<appender-ref ref="stdout"/>
+		</root>
+	</springProfile>
+</configuration>

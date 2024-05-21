@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.paradigma.poc</groupId>
+  <artifactId>graphql-products</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>graphql-products</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <springframework.boot.version>3.2.5</springframework.boot.version>
+    <spring-cloud.version>2023.0.0</spring-cloud.version>
+    <!-- Java -->
+    <java.version>17</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <!-- graphql -->
+    <graphql-java-extended-scalars.version>17.1</graphql-java-extended-scalars.version>
+    <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
+    <graphql-maven-plugin.version>2.5</graphql-maven-plugin.version>
+    <!-- Logging & Tracing -->
+    <logback.contrib.version>0.1.5</logback.contrib.version>
+
+    <lombok.version>1.18.30</lombok.version>
+    <mapstruct.version>1.5.5.Final</mapstruct.version>
+    <org.mockito.version>4.11.0</org.mockito.version>
+    <jacoco.version>0.8.11</jacoco.version>
+    <maven.pitest.plugin.version>1.15.3</maven.pitest.plugin.version>
+  </properties>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.5</version>
+    <relativePath />
+  </parent>
+
+
+  <dependencies>
+
+    <dependency>
+      <!-- Import dependency management from Spring Boot -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-dependencies</artifactId>
+      <version>${springframework.boot.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      <version>${spring-cloud.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>ch.qos.logback.contrib</groupId>
+      <artifactId>logback-json-classic</artifactId>
+      <version>${logback.contrib.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback.contrib</groupId>
+      <artifactId>logback-jackson</artifactId>
+      <version>${logback.contrib.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-graphql</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.graphql</groupId>
+      <artifactId>spring-graphql-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-extended-scalars</artifactId>
+      <version>${graphql-java-extended-scalars.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.graphql-java-generator</groupId>
+      <artifactId>graphql-java-server-runtime</artifactId>
+      <version>${graphql-maven-plugin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-tools</artifactId>
+      <version>${graphql-java-tools.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+            <!-- other annotation processors -->
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <arg> -Amapstruct.suppressGeneratorTimestamp=true
+            </arg>
+            <arg> -Amapstruct.suppressGeneratorVersionInfoComment=true
+            </arg>
+            <arg> -Amapstruct.defaultComponentModel=spring
+            </arg>
+            <arg> -Amapstruct.defaultInjectionStrategy=constructor
+            </arg>
+          </compilerArgs>
+        </configuration>
+        <inherited>true</inherited>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.graphql-java-generator</groupId>
+        <artifactId>graphql-maven-plugin</artifactId>
+        <version>${graphql-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generateServerCode</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schemaFilePattern>graphql/schema.graphqls</schemaFilePattern>
+          <scanBasePackages>com.paradigma.poc.graphql.example</scanBasePackages>
+          <mode>server</mode>
+          <useJakartaEE9>true</useJakartaEE9>
+          <packageName>com.paradigma.poc.graphql.example.interfaces.graphql</packageName>
+
+          <customScalars>
+            <scalar>
+              <graphQLTypeName>DateTime</graphQLTypeName>
+              <javaType>java.time.OffsetDateTime</javaType>
+              <graphQLScalarTypeStaticField>graphql.scalars.ExtendedScalars.DateTime</graphQLScalarTypeStaticField>
+            </scalar>
+            <scalar>
+              <graphQLTypeName>Long</graphQLTypeName>
+              <javaType>java.lang.Long</javaType>
+              <graphQLScalarTypeStaticField>graphql.scalars.ExtendedScalars.GraphQLLong</graphQLScalarTypeStaticField>
+            </scalar>
+            <scalar>
+              <graphQLTypeName>Email</graphQLTypeName>
+              <javaType>java.lang.String</javaType>
+              <graphQLScalarTypeStaticField>graphql.scalars.ExtendedScalars.newRegexScalar("Email").addPattern(java.util.regex.Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")).build()</graphQLScalarTypeStaticField>
+            </scalar>
+            <scalar>
+              <graphQLTypeName>IntRange0To100Scalar</graphQLTypeName>
+              <javaType>java.lang.Integer</javaType>
+              <graphQLScalarTypeStaticField>com.paradigma.poc.graphql.example.interfaces.configuration.IntRange0To100Scalar.INSTANCE</graphQLScalarTypeStaticField>
+            </scalar>
+          </customScalars>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

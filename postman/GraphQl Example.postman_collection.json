@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "57b8532e-bbde-4c7a-bcd7-2d59a39d5782",
+		"name": "GraphQl Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5350091"
+	},
+	"item": [
+		{
+			"name": "Mutation Create Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    createProduct(\n        productRequest: {\n            name: \"nombre\"\n            expeditionDate: \"2000-10-31T01:30:00.000-05:00\"\n            expirationDate: \"2000-10-31T01:30:00.000-05:00\"\n            email: \"ajgarcia@paradigmadigital.com\"\n            price: 56\n            color: BLUE\n            reviews: [{ evaluation: 1, comment: \"ff\" }, { evaluation: 6, comment: \"sec\" }]\n        }\n    ) {\n        id\n        name\n        price\n        expeditionDate\n        color\n        reviews {\n            id\n            comment\n            evaluation\n        }\n    }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mutation Update Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation{\n  updateProduct( productUpdate:{\n    id:1\n    name: \"nombre\",\n    expeditionDate: \"2000-10-31T01:30:00.000-05:00\",\n    expirationDate:\"2000-10-31T01:30:00.000-05:00\",\n    email: \"ajag@fff.es\"\n    price: 54,\n    color: BLUE,\n    reviews:[\n      {\n      evaluation:1,\n      comment:\"ff\"\n      },\n      {\n      evaluation:6,\n      comment:\"sec\"\n    \t}\n    ]\n  }) {\n    id,\n    name,\n    price,\n    expeditionDate\n    reviews {\n      id,\n      comment,\n      evaluation\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Get ById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query{\n  product(id:1){\n    id,\n    color,\n    reviews {\n      comment\n      evaluation\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Get Paged",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ProductPaged {\n    productPaged(pageNumber: 0, pageSize: 20) {\n        id\n        name\n        price\n        color\n        email\n        expeditionDate\n        expirationDate\n    }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mutation Delete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DeleteProduct {\n    deleteProduct(id:  1)\n}\n\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
